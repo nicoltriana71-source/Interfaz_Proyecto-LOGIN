@@ -1102,3 +1102,6 @@ footer{
   html{scroll-behavior:auto;}
   *{transition:none !important;}
 }
+.logo{
+  width: 70px;
+}
