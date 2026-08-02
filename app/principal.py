@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from app.base_datos import engine
+import app.modelos  # importa las 8 tablas y resuelve sus relaciones
 from app.rutas.usuario import router as usuarios_router
 
 app = FastAPI(
