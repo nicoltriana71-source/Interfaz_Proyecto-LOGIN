@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudNova IA</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+
+<div class="contenedor">
+
+    <header class="header">
+        <h1>StudNova IA</h1>
+        <p>Tu tutor virtual inteligente</p>
+    </header>
+
+    <main class="chat">
+        <div class="mensaje ia">
+            <div class="avatar">🤖</div>
+            <div class="contenido">
+                ¡Hola! Soy el asistente de StudNova. ¿En qué puedo ayudarte hoy?
+            </div>
+        </div>
+
+        <div id="mensajes"></div>
+    </main>
+
+    <footer class="escribir">
+        <textarea
+            id="pregunta"
+            placeholder="Escribe tu pregunta..."
+            rows="2"></textarea>
+
+        <button id="btnEnviar">
+            Enviar
+        </button>
+    </footer>
+
+</div>
+
+<script>
+    const mensajeInput = document.getElementById('pregunta');
+    const botonEnviar = document.getElementById('btnEnviar');
+    const mensajes = document.getElementById('mensajes');
+
+    function agregarMensaje(texto, tipo) {
+        const div = document.createElement('div');
+        div.className = `mensaje ${tipo}`;
+
+        const avatar = document.createElement('div');
+        avatar.className = 'avatar';
+        avatar.textContent = tipo === 'usuario' ? '👤' : '🤖';
+
+        const contenido = document.createElement('div');
+        contenido.className = 'contenido';
+        contenido.textContent = texto;
+
+        div.appendChild(avatar);
+        div.appendChild(contenido);
+        mensajes.appendChild(div);
+        mensajes.scrollTop = mensajes.scrollHeight;
+    }
+
+    async function enviarMensaje() {
+        const texto = mensajeInput.value.trim();
+        if (!texto) return;
+
+        agregarMensaje(texto, 'usuario');
+        mensajeInput.value = '';
+        botonEnviar.disabled = true;
+
+        try {
+            const respuesta = await fetch('http://127.0.0.1:8001/ia/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ mensaje: texto })
+            });
+
+            const data = await respuesta.json();
+
+            if (!respuesta.ok) {
+                throw new Error(data.detail || 'No se pudo obtener respuesta');
+            }
+
+            agregarMensaje(data.respuesta, 'ia');
+        } catch (error) {
+            agregarMensaje('Error: ' + error.message, 'ia');
+        } finally {
+            botonEnviar.disabled = false;
+            mensajeInput.focus();
+        }
+    }
+
+    botonEnviar.addEventListener('click', enviarMensaje);
+
+    mensajeInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            enviarMensaje();
+        }
+    });
+</script>
+
+</body>
+</html>
