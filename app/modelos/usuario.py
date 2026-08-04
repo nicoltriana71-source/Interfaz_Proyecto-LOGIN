@@ -19,7 +19,7 @@ class Usuario(SQLModel, table=True):
     id_usuario: Optional[int] = Field(default=None, primary_key=True)
     nombre: str = Field(max_length=100)
     correo: str = Field(max_length=100)
-    contraseña: str = Field(max_length=10)
+    contraseña: str = Field(max_length=100)
     rol: RolUsuario
 
     chats: List["ChatIA"] = Relationship(back_populates="usuario")

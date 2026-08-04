@@ -1,7 +1,7 @@
 from sqlmodel import create_engine, Session
 
-USUARIO = "estudiante"
-PASSWORD = "estudi1234"
+USUARIO = "root"
+PASSWORD = ""
 HOST = "localhost"
 PUERTO = "3306"
 BASE_DATOS = "studnova"
