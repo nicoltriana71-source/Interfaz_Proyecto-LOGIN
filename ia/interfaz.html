@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudNova IA</title>
-    <link rel="stylesheet" href="css.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/ia/css.css">
 </head>
 <body>
 
@@ -71,7 +72,7 @@
         botonEnviar.disabled = true;
 
         try {
-            const respuesta = await fetch('http://127.0.0.1:8001/ia/chat', {
+            const respuesta = await fetch('http://127.0.0.1:8000/ia/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
