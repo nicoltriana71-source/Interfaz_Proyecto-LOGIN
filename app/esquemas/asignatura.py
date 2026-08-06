@@ -7,6 +7,11 @@ class AsignaturaCrear(SQLModel):
     nivel_dificultad: NivelDificultad
 
 
+class AsignaturaActualizar(SQLModel):
+    nombre: str
+    nivel_dificultad: NivelDificultad
+
+
 class AsignaturaRespuesta(SQLModel):
     id_asignatura: int
     nombre: str

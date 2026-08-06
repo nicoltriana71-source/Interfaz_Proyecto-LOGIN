@@ -2,17 +2,19 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session
 
 from app.base_datos import obtener_sesion
-
 from app.modelos.asignatura import Asignatura
 
 from app.esquemas.asignatura import (
     AsignaturaCrear,
+    AsignaturaActualizar,
     AsignaturaRespuesta
 )
 
 from app.crud.asignatura import (
     crear_asignatura,
-    obtener_asignaturas
+    obtener_asignaturas,
+    editar_asignatura,
+    eliminar_asignatura
 )
 
 router = APIRouter(
@@ -41,3 +43,20 @@ def listar_asignaturas(
 ):
 
     return obtener_asignaturas(sesion)
+
+
+@router.put("/{id_asignatura}", response_model=AsignaturaRespuesta)
+def actualizar_asignatura(
+    id_asignatura: int,
+    datos: AsignaturaActualizar,
+    sesion: Session = Depends(obtener_sesion)
+):
+    return editar_asignatura(sesion, id_asignatura, datos)
+
+
+@router.delete("/{id_asignatura}")
+def borrar_asignatura(
+    id_asignatura: int,
+    sesion: Session = Depends(obtener_sesion)
+):
+    return eliminar_asignatura(sesion, id_asignatura)

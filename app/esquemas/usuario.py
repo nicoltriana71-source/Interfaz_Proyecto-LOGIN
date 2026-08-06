@@ -8,6 +8,13 @@ class UsuarioCrear(SQLModel):
     rol: str
 
 
+class UsuarioActualizar(SQLModel):
+    nombre: str
+    correo: str
+    contraseña: str
+    rol: str
+
+
 class UsuarioRespuesta(SQLModel):
     id_usuario: int
     nombre: str
