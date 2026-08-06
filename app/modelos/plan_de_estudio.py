@@ -3,10 +3,10 @@ from datetime import datetime
 from sqlmodel import SQLModel, Field, Relationship
 
 if TYPE_CHECKING:
-    from modelos.usuario import Usuario
-    from modelos.asignatura import Asignatura
-    from modelos.ruta_de_aprendizaje import RutaDeAprendizaje
-    from modelos.sugerencia import Sugerencia
+    from app.modelos.usuario import Usuario
+    from app.modelos.asignatura import Asignatura
+    from app.modelos.ruta_de_aprendizaje import RutaDeAprendizaje
+    from app.modelos.sugerencia import Sugerencia
 
 
 class PlanDeEstudio(SQLModel, table=True):
